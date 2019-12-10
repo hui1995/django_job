@@ -1,0 +1,104 @@
+{% extends 'systemBase.html' %}
+{% load staticfiles %}
+{% block content %}
+<div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-light">
+                        {% ifequal status 0 %}
+                        待提交项目
+
+                        {% endifequal %}
+
+                    {% ifequal status 1 %}
+                        已提交项目
+
+                        {% endifequal %}
+
+                    {% ifequal status 2 %}
+                        已评分项目
+                    {% endifequal %}
+
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>项目名</th>
+                                    {% ifequal status 2 %}
+                                        <th>人工评分</th>
+                                        <th>自动评分</th>
+
+                                        {% else %}
+
+                                    <th style="text-align: center">操作</th>
+
+
+                                    {% endifequal %}
+
+
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for foo in joblist2 %}
+
+
+
+
+                                        <tr>
+                                            <td>{{ foo.name }}</td>
+
+                                               {% ifequal status 2 %}
+                                              <td>{{ foo.grade }}</td>
+                                              <td>{{ foo.meaching_grade }}</td>
+
+
+                                        {% endifequal %}
+                                        <td style="text-align: center">
+                                        {% ifequal status 0 %}
+                                                 <div class="col-6">
+
+                                        </div>
+                                                              <div class="col-2" style="margin-left: 400px">
+                                                            <a href="/addjob?id={{ foo.id }}"><button type="submit" class="btn btn-primary px-5">提交</button></a>
+                                        </div>
+
+
+
+                                        {% endifequal %}
+                                            </td>
+                                           <td style="text-align: center">
+                                          {% ifequal status 1%}
+                                                 <div class="col-4">
+
+                                        </div>
+                                                              <div class="col-2" style="margin-left: 400px">
+                                                            <a href="/editjob?id={{ foo.id }}"><button type="submit" class="btn btn-primary px-5">修改</button></a>
+                                        </div>
+                                                  {% endifequal %}
+                                           </td>
+                                 
+
+
+
+                                        </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+      
+{% endblock %} 

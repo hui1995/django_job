@@ -1,0 +1,158 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% if request.session.root %}
+        作业评分系统
+        {% else %}
+        作业提交系统
+        {% endif %}
+    </title>
+    <link rel="stylesheet" href="{% static 'static/vendor/simple-line-icons/css/simple-line-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'static/vendor/font-awesome/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'static/css/styles.css' %}">
+</head>
+<body class="sidebar-fixed header-fixed">
+<div class="page-wrapper">
+    <nav class="navbar page-header">
+        <a href="#" class="btn btn-link sidebar-mobile-toggle d-md-none mr-auto">
+            <i class="fa fa-bars"></i>
+        </a>
+
+        <a class="navbar-brand" href="#">
+            作业管理系统
+        </a>
+
+        <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">
+            <i class="fa fa-bars"></i>
+        </a>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item d-md-down-none">
+
+            </li>
+
+            <li class="nav-item d-md-down-none">
+                欢迎您再次回来
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    <span class="small ml-1 d-md-down-none">{{ request.user.username }}</span>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right">
+
+                    <a href="/logout/" class="dropdown-item">
+                        <i class="fa fa-lock"></i> Logout
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav">
+                    {% if request.user.root %}
+                        <li class="nav-title">作业评分系统</li>
+                        <li class="nav-item nav-dropdown" >
+                            <a href="#" class="nav-link nav-dropdown-toggle">
+                              未打分项目
+                            </a>
+
+
+                          <ul class="nav-dropdown-items">
+
+                              {% for foo in projectlist %}
+
+
+
+                                    <li class="nav-item">
+                                        <a href="/adminprojectlist?type=0&projectId={{ foo.id }}" class="nav-link">
+                                            <i class="icon icon-target"></i> {{ foo.name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+
+
+                                </ul>
+                        </li>
+                           <li class="nav-item nav-dropdown" >
+                            <a href="#" class="nav-link nav-dropdown-toggle">
+                               已打分项目
+                            </a>
+
+
+                          <ul class="nav-dropdown-items">
+
+                              {% for foo in projectlist %}
+
+
+
+                                    <li class="nav-item">
+                                        <a href="/adminprojectlist?type=1&projectId={{ foo.id }}" class="nav-link">
+                                            <i class="icon icon-target"></i> {{ foo.name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+
+
+                                </ul>
+                        </li>
+                         <li class="nav-item nav-dropdown">
+                            <a href="/pushproject/" class="nav-link">
+                               发布项目
+                            </a>
+                        </li>
+
+
+
+
+                        </li>
+
+                    {% else %}
+                        <li class="nav-title">作业提交系统</li>
+
+
+
+                          <li class="nav-item">
+                            <a href="/index/" class="nav-link">
+                                <i class="icon icon-speedometer"></i> 待提交项目
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/index?type=1" class="nav-link">
+                                <i class="icon icon-target"></i> 已提交项目
+                            </a>
+
+
+                        </li>
+                             <li class="nav-item">
+                            <a href="/index?type=2" class="nav-link">
+                                <i class="icon icon-target"></i> 已评分项目
+                            </a>
+
+
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+{% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+<script src="{% static 'static/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'static/vendor/popper.js/popper.min.js' %}"></script>
+<script src="{% static 'static/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'static/vendor/chart.js/chart.min.js' %}"></script>
+<script src="{% static 'static/js/carbon.js' %}"></script>
+<script src="{% static 'static/js/demo.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+{% extends 'systemBase.html' %}
+{% load staticfiles %}
+{% block content %}
+<div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-light">
+                        {% ifequal status 0 %}
+                        {{ name }}待打分项目
+
+
+                    {% else %}
+                        {{ name }}已评分项目
+                    {% endifequal %}
+
+                    </div>
+
+                    <div class="card-body">
+                    {% ifequal status 0 %}
+
+
+
+                        <form action="/adminprojectlist/" method="POST">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="row">
+                                        <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="single-select">项目名</label>
+                                                    <select name="projectId" class="form-control">
+                                                        {% for project in projectlist %}
+                                                            <option  value="{{ project.id }}">{{ project.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+
+
+                                        </div>
+                                    <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="single-select">员工名</label>
+                                                    <select name="userId" class="form-control">
+                                                        {% for user in userlist %}
+                                                            <option value="{{ user.id }}">{{ user.username }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+
+
+                                        </div>
+                                    <div class="row mt-4">
+                                        <div class="col-8">
+
+                                        </div>
+                                        <div class="col-2">
+                                            <button type="submit" class="btn btn-primary px-5">进入评分</button>
+                                        </div>
+                                    </div>
+
+
+                            </div>
+                            </div>
+                            </form>
+                    {% else %}
+                         <form action="/adminprojectlist/" method="POST">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="row">
+                                        <div class="col-md-4">
+                                            <input type="text" name="projectId" style="display: none" value="{{ projectId }}">
+                                                <div class="form-group">
+                                                    <label for="single-select">分数</label>
+                                                    <select name="graderanke" class="form-control">
+
+                                                            <option value="0-10">0-10</option>
+                                                            <option value="10-20">10-20</option>
+                                                            <option value="20-30">20-30</option>
+                                                            <option value="30-40">30-40</option>
+                                                            <option value="40-50">40-50</option>
+                                                            <option value="50-60">50-60</option>
+                                                            <option value="60-70">60-70</option>
+                                                            <option value="70-80">70-80</option>
+                                                            <option value="80-90">80-90</option>
+                                                            <option value="90-100">90-100</option>
+
+                                                    </select>
+                                                </div>
+
+
+                                        </div>
+
+
+                                    <div class="row mt-4">
+                                        <div class="col-8">
+
+                                        </div>
+                                        <div class="col-2">
+                                            <button type="submit" class="btn btn-primary px-5">查看</button>
+                                        </div>
+                                    </div>
+
+
+                            </div>
+                            </div>
+                            </form>
+                     {% endifequal %}
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+
+                                <th>员工名</th>
+
+                                    {% ifequal status 0 %}
+
+                                    <th>自动分数</th>
+                                          <th>打分</th>
+
+                                        {% else %}
+
+                                         <th>人工评分</th>
+                                        <th>自动评分</th>
+
+
+                                    {% endifequal %}
+
+
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for foo in joblist %}
+
+
+
+                                        <tr>
+                                            <td>{{ foo.user }}</td>
+
+
+                                        {% ifequal status 0 %}
+                                             <td>{{ foo.meaching_grade }}</td>
+                                              <td>
+                                                 <div class="col-4">
+
+                                        </div>
+                                                              <div class="col-2">
+                                                            <a href="/scorejob?id={{ foo.id }}"><button type="submit" class="btn btn-primary px-5">打分</button></a>
+                                        </div>
+
+                                            </td>
+                                        {% endifequal %}
+                                          {% ifequal status 1%}
+                                               <td>{{ foo.grade }}</td>
+                                                  <td>{{ foo.meaching_grade }}</td>
+
+
+                                                  {% endifequal %}
+
+
+                                            {% ifequal status 2 %}
+                                              <td>{{ foo.grade }}</td>
+                                              <td>{{ foo.meaching_grade }}</td>
+
+
+                                        {% endifequal %}
+
+
+                                        </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+      
+{% endblock %} 

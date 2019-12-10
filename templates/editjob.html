@@ -1,0 +1,82 @@
+
+{% extends 'systemBase.html' %}
+{% load staticfiles %}
+{% block content %}
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                提交任务
+                            </div>
+                            <div class="card-header bg-light">
+                                    {{ message }}
+                            </div>
+                            <form action="/editjob/" method="POST">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="normal-input" class="form-control-label">项目名称</label>
+                                              <input name="projectname" type="text" class="form-control" readonly="readonly"  value="{{ project.name }}">
+                                              <input name="id" type="text" class="form-control" readonly="readonly" style="display: none" value="{{ job.id }}">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                      <div class="row">
+                                    <div class="col-md-3">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="normal-input" class="form-control-label">提交者姓名</label>
+                                              <input name="user" type="text" class="form-control" readonly="readonly" value="{{ request.user.username }}">
+
+                                        </div>
+                                    </div>
+                                      </div>
+
+                                            <div class="row">
+                                    <div class="col-md-3">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="normal-input" class="form-control-label">内容</label>
+                                              <textarea name="content" type="text" class="form-control" style="height: 150px">
+                                                  {{ job.content }}
+                                              </textarea>
+                                        </div>
+                                    </div>
+                                            </div>
+
+
+
+
+
+                                </div>
+                                    <div class="row mt-4">
+                                        <div class="col-7">
+
+                                        </div>
+
+                                        <div class="col-2">
+                                            <button type="submit" class="btn btn-primary px-5" style="margin-top: -10px">提交任务</button>
+                                        </div>
+                                    </div>
+
+
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+{% endblock %} 
+      
